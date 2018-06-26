@@ -1,0 +1,13 @@
+mainmodule multihello{
+	mainchare Origin{
+		entry Origin(CkArgMsg *m);
+	};
+
+	chare Interim{
+		entry Interim(int x);
+	};
+	
+	chare Destination{
+		entry Destination(int x);
+	};
+};

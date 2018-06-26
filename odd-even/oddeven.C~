@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "oddeven.decl.h"
+
+class Main: public CBase_Main {
+  private:
+    int N;
+
+  public:
+    Main(CkMigrateMessage* msg){}
+    Main(CkArgMsg* msg){
+      N=atoi(msg->argv[1]);
+      CProxy_Chr chrarray=CProxy_Chr::ckNew(thisProxy,N,N);        
+    }
+
+    void checkSorted(CkReductionMsg *msg){
+      CkReduction::setElement *current=(CkReduction::setElement*)msg->getData();
+      int currNum, prevNum=-128;
+      while(current!=NULL){
+        int currNum=current->data[0];
+        ckout<<currNum<<","<<endl;
+        if(prevNum>currNum){
+          ckout<<"\nBad Sorting"<<endl;
+          CkExit();
+        }
+        else
+        current=current->next();
+      }
+      ckout<<"\nGood Sorting"<<endl;
+      CkExit();
+    }
+};
+
+class Chr: public CBase_Chr {
+  private:
+    int step;
+    int* buff;
+    int* flagbuf;
+    int num;
+    CProxy_Main main;	
+  public:
+    Chr(CkMigrateMessage* msg){}
+    Chr(CProxy_Main imain,int iN){
+      step=0;
+     int N=iN; 
+      buff=(int*)malloc(N*sizeof(int));
+      flagbuf=(int*)malloc(N*sizeof(int));
+      for(int i=0;i<N;i++)flagbuf[i]=0;
+      main=imain;
+     	ckout<<thisIndex;
+    }
+    
+
+    void changeNumber(int inum,int istep){
+      flagbuf[istep]=1;
+      if( (step%2==0 && thisIndex%2==0) || (step%2==1 && thisIndex%2==1))
+        buff[step]=inum<num?inum:num;
+      else
+        buff[step]=inum>num?inum:num;
+    }
+};
+
+#include "oddeven.def.h"

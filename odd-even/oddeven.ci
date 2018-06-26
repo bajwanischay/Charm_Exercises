@@ -1,0 +1,13 @@
+mainmodule oddeven{
+  mainchare Main{
+    entry Main(CkArgMsg* msg);
+    entry [reductiontarget] void checkSorted(int result);
+  };
+
+  array [1D] Chr{
+    entry Chr(CProxy_Main main, int N);
+    entry void send();
+    entry void finalsend(int num,int right);
+    entry void sendNumber(int num,int step);
+  };
+};

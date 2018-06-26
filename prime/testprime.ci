@@ -1,0 +1,10 @@
+mainmodule testprime{
+	mainchare Origin{
+		entry Origin(CkArgMsg* msg);
+		entry void isPrime(int n,int key,int res[n]);
+	};
+	
+	chare checkPrime{
+		entry checkPrime(int n,int key,int val[n]);
+	};
+};

@@ -1,0 +1,15 @@
+mainmodule particle{
+  include "particle.h";
+  mainchare Main{
+    entry Main(CkArgMsg* msg);
+    entry [reductiontarget] void printMax(int max);
+    entry [reductiontarget] void printTotal(int total);
+  };
+
+  array [2D] Grid{
+    entry Grid(int n,float dim,int maxiter,CProxy_Main main);
+    entry void Move(int iteration);
+    entry void Transfer(int iteration,std::vector<Particle> in);
+  };
+};
+    
